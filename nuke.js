@@ -1,30 +1,12 @@
 const { REST, Routes, SlashCommandBuilder } = require('discord.js');
 require('dotenv').config();
 
-// List of old commands to register and then remove
+// list your old commands to overwrite and then remove
 const oldCommandsToRegister = [
     { name: 'clear', description: 'Clear the music queue' },
     { name: 'disconnect', description: 'Disconnect the bot from voice channel' },
-    { name: 'fseek', description: 'Fast seek in current track' },
-    { name: 'loop-queue', description: 'Loop the entire queue' },
-    { name: 'move', description: 'Move a track in the queue' },
-    { name: 'now-playing', description: 'Show currently playing track' },
-    { name: 'play', description: 'Play a song' },
-    { name: 'remove', description: 'Remove a track from queue' },
-    { name: 'resume', description: 'Resume playback' },
-    { name: 'shuffle', description: 'Shuffle the queue' },
-    { name: 'stop', description: 'Stop playback' },
-    { name: 'volume', description: 'Set playback volume' },
-    { name: 'config', description: 'Bot configuration' },
-    { name: 'favorites', description: 'Manage favorite tracks' },
-    { name: 'loop', description: 'Loop current track' },
-    { name: 'next', description: 'Skip to next track' },
-    { name: 'pause', description: 'Pause playback' },
-    { name: 'queue', description: 'Show music queue' },
-    { name: 'replay', description: 'Replay current track' },
-    { name: 'seek', description: 'Seek in current track' },
-    { name: 'skip', description: 'Skip current track' },
-    { name: 'unskip', description: 'Go back to previous track' }
+    { name: 'example', description: 'This is an example command' },
+    
 ];
 
 const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
@@ -58,7 +40,7 @@ const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
         // Wait a moment for registration to complete
         await new Promise(resolve => setTimeout(resolve, 2000));
 
-        console.log(`🗑️  Step 2: Now removing these old commands...`);
+        console.log(`🗑️  Step 2: Now removing these listed commands...`);
 
         // Get all currently registered commands
         const registeredCommands = await rest.get(Routes.applicationCommands(process.env.CLIENT_ID));
@@ -82,8 +64,7 @@ const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
             }
         }
 
-        console.log('\n🎉 Successfully cleaned up all old commands!');
-        console.log('💡 Now you can deploy your current commands safely.');
+        console.log('\n🎉 Successfully cleaned up listed commands!');
         
     } catch (error) {
         console.error('❌ Error in cleanup process:', error);
