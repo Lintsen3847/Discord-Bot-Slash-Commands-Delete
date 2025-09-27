@@ -1,6 +1,6 @@
-# Discord Command Cleanup Utilities
+# Discord Command Cleanup Tool
 
-A collection of utility scripts to help Discord bot developers clean up old slash commands when migrating projects or reusing bot tokens.
+A simple utility to help Discord bot developers inspect and clean up old slash commands when migrating projects or reusing bot tokens.
 
 ## Why Do You Need This?
 
@@ -18,22 +18,10 @@ See what commands are currently registered with your bot.
 node check-commands.js
 ```
 
-### 2. `clear-all-commands.js` - Nuclear Option
-Remove ALL commands (global and guild) - use with caution!
-```bash
-node clear-all-commands.js
-```
-
-### 3. `register-and-remove.js` - Targeted Cleanup
+### 2. `register-and-remove.js` - Targeted Cleanup
 Register specific old commands and immediately remove them (useful when you know exact command names).
 ```bash
 node register-and-remove.js
-```
-
-### 4. `global-cleanup.js` - Comprehensive Global Cleanup
-The most thorough option - ensures worldwide cleanup.
-```bash
-node global-cleanup.js
 ```
 
 ## Requirements
@@ -70,23 +58,17 @@ GUILD_ID=your_server_id_here
 node check-commands.js
 ```
 
-### Clean slate (remove everything):
-```bash
-node clear-all-commands.js
-```
-
 ### Remove specific old commands:
 Edit the `oldCommandsToRemove` array in `register-and-remove.js`, then:
 ```bash
 node register-and-remove.js
 ```
 
-## Safety Features
+## Features
 
-- **Confirmation prompts** before destructive actions
-- **Backup functionality** to save command lists before deletion
-- **Rollback capability** to restore commands if needed
-- **Dry-run mode** to preview what will be deleted
+- **Command inspection** - View all currently registered commands
+- **Targeted removal** - Remove specific commands by name
+- **Safe operation** - No bulk deletion, only removes commands you specify
 
 ## Important Notes
 
@@ -109,12 +91,18 @@ Found a bug? Have a feature request? Contributions are welcome!
 
 MIT License - See LICENSE file for details
 
+## Workflow
+
+1. **First, inspect your commands**: Run `check-commands.js` to see what's currently registered
+2. **Identify unwanted commands**: Note the names of commands you want to remove
+3. **Edit the removal script**: Update the `oldCommandsToRemove` array in `register-and-remove.js`
+4. **Execute cleanup**: Run `register-and-remove.js` to remove the specified commands
+
 ## Tips
 
 - Use **GUILD_ID** for instant testing during development
 - Remove **GUILD_ID** for global deployment in production
 - Always run `check-commands.js` first to see what you're working with
-- Consider using guild commands for testing new features
 
 ## Troubleshooting
 
