@@ -12,16 +12,16 @@ When you inherit a Discord bot token or migrate from one project to another, old
 
 ## Available Tools
 
-### 1. `check-commands.js` - Command Inspector
+### 1. `check.js` - Command Inspector
 See what commands are currently registered with your bot.
 ```bash
-node check-commands.js
+node check.js
 ```
 
-### 2. `register-and-remove.js` - Targeted Cleanup
+### 2. `nuke.js` - Targeted Cleanup
 Register specific old commands and immediately remove them (useful when you know exact command names).
 ```bash
-node register-and-remove.js
+node nuke.js
 ```
 
 ## Requirements
@@ -55,13 +55,13 @@ CLIENT_ID=your_bot_client_id_here
 
 ### Check what's currently registered:
 ```bash
-node check-commands.js
+node check.js
 ```
 
 ### Remove specific old commands:
-Edit the `oldCommandsToRemove` array in `register-and-remove.js`, then:
+Edit the `oldCommandsToRemove` array in `nuke.js`, then:
 ```bash
-node register-and-remove.js
+node nuke.js
 ```
 
 ## Features
@@ -93,16 +93,16 @@ MIT License - See LICENSE file for details
 
 ## Workflow
 
-1. **First, inspect your commands**: Run `check-commands.js` to see what's currently registered
+1. **First, inspect your commands**: Run `check.js` to see what's currently registered
 2. **Identify unwanted commands**: Note the names of commands you want to remove
-3. **Edit the removal script**: Update the `oldCommandsToRemove` array in `register-and-remove.js`
-4. **Execute cleanup**: Run `register-and-remove.js` to remove the specified commands
+3. **Edit the removal script**: Update the `oldCommandsToRemove` array in `nuke.js`
+4. **Execute cleanup**: Run `nuke.js` to remove the specified commands
 
 ## Tips
 
 - Use **GUILD_ID** for instant testing during development
 - Remove **GUILD_ID** for global deployment in production
-- Always run `check-commands.js` first to see what you're working with
+- Always run `check.js` first to see what you're working with
 
 ## Troubleshooting
 
