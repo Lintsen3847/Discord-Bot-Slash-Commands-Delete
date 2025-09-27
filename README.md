@@ -43,7 +43,7 @@ BOT_TOKEN=your_bot_token_here
 CLIENT_ID=your_bot_client_id_here
 
 # Optional - for guild-specific cleanup
-GUILD_ID=your_server_id_here
+# GUILD_ID=your_server_id_here
 ```
 
 3. **Get your credentials:**
