@@ -14,7 +14,9 @@
     "cleanup",
     "migration",
     "utilities",
-    "discord.js"
+    "discord.js",
+    "delete",
+    "remove"
   ],
   "author": "Your Name",
   "license": "MIT",
