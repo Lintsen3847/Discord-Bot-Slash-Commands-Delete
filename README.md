@@ -34,7 +34,7 @@ node nuke.js
 
 1. **Install dependencies:**
 ```bash
-npm install discord.js dotenv
+npm install
 ```
 
 2. **Create `.env` file:**
