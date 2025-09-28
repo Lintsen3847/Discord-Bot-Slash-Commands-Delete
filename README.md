@@ -27,8 +27,6 @@ node nuke.js
 ## Requirements
 
 1. **Node.js** (v16.11.0 or higher)
-2. **discord.js** (v14 or higher)
-3. **dotenv** for environment variables
 
 ## Setup
 
@@ -64,12 +62,6 @@ Edit the `oldCommandsToRemove` array in `nuke.js`, then:
 node nuke.js
 ```
 
-## Features
-
-- **Command inspection** - View all currently registered commands
-- **Targeted removal** - Remove specific commands by name
-- **Safe operation** - No bulk deletion, only removes commands you specify
-
 ## Important Notes
 
 - **Global commands** take up to 1 hour to propagate worldwide
@@ -77,26 +69,9 @@ node nuke.js
 - Always **test in a development server** first
 - Keep your **BOT_TOKEN** secure and never commit it to version control
 
-## Contributing
-
-Found a bug? Have a feature request? Contributions are welcome!
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
 ## License
 
 MIT License - See LICENSE file for details
-
-## Workflow
-
-1. **First, inspect your commands**: Run `check.js` to see what's currently registered
-2. **Identify unwanted commands**: Note the names of commands you want to remove
-3. **Edit the removal script**: Update the `oldCommandsToRemove` array in `nuke.js`
-4. **Execute cleanup**: Run `nuke.js` to remove the specified commands
 
 ## Tips
 
@@ -104,12 +79,6 @@ MIT License - See LICENSE file for details
 - Remove **GUILD_ID** for global deployment in production
 - Always run `check.js` first to see what you're working with
 
-## Troubleshooting
-
-**"Missing Access" Error**: Make sure your bot has the `applications.commands` scope  
-**Commands not appearing**: Global commands take up to 1 hour to propagate  
-**Permission denied**: Verify your BOT_TOKEN and CLIENT_ID are correct
-
 ---
 
-Made with love for the Discord bot development community
+*Created by Lin_tsen • 2025/9/28*
