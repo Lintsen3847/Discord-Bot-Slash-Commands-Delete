@@ -62,22 +62,9 @@ Edit the `oldCommandsToRemove` array in `nuke.js`, then:
 node nuke.js
 ```
 
-## Important Notes
-
-- **Global commands** take up to 1 hour to propagate worldwide
-- **Guild commands** update instantly but only affect specific servers
-- Always **test in a development server** first
-- Keep your **BOT_TOKEN** secure and never commit it to version control
-
 ## License
 
 MIT License - See LICENSE file for details
-
-## Tips
-
-- Use **GUILD_ID** for instant testing during development
-- Remove **GUILD_ID** for global deployment in production
-- Always run `check.js` first to see what you're working with
 
 ---
 
