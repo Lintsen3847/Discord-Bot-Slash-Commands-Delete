@@ -6,46 +6,46 @@ const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
 (async () => {
     try {
         if (!process.env.CLIENT_ID) {
-            console.error('❌ CLIENT_ID not found in .env file!');
+            console.error('❌ 在 .env 文件中找不到 CLIENT_ID！');
             process.exit(1);
         }
 
-        console.log('🔍 Checking currently registered commands...\n');
+        console.log('🔍 正在檢查已註冊的指令...\n');
         
-        // Check global commands
+        // 檢查全域指令
         const globalCommands = await rest.get(Routes.applicationCommands(process.env.CLIENT_ID));
-        console.log(`📋 Global Commands (${globalCommands.length}):`);
+        console.log(`📋 全域指令 (${globalCommands.length} 個):`);
         if (globalCommands.length === 0) {
-            console.log('   (No global commands registered)');
+            console.log('   (沒有已註冊的全域指令)');
         } else {
             globalCommands.forEach((cmd, index) => {
-                console.log(`   ${index + 1}. ${cmd.name} - ${cmd.description || 'No description'}`);
+                console.log(`   ${index + 1}. ${cmd.name} - ${cmd.description || '無描述'}`);
             });
         }
 
-        // Check guild commands if GUILD_ID is provided
+        // 如果提供了 GUILD_ID，檢查公會指令
         if (process.env.GUILD_ID) {
-            console.log('\n🏠 Guild Commands:');
+            console.log('\n🏠 公會指令:');
             try {
                 const guildCommands = await rest.get(
                     Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID)
                 );
-                console.log(`📋 Guild Commands (${guildCommands.length}):`);
+                console.log(`📋 公會指令 (${guildCommands.length} 個):`);
                 if (guildCommands.length === 0) {
-                    console.log('   (No guild commands registered)');
+                    console.log('   (沒有已註冊的公會指令)');
                 } else {
                     guildCommands.forEach((cmd, index) => {
-                        console.log(`   ${index + 1}. ${cmd.name} - ${cmd.description || 'No description'}`);
+                        console.log(`   ${index + 1}. ${cmd.name} - ${cmd.description || '無描述'}`);
                     });
                 }
             } catch (error) {
-                console.log('   (No guild commands or invalid GUILD_ID)');
+                console.log('   (沒有公會指令或 GUILD_ID 無效)');
             }
         } else {
-            console.log('\n💡 Add GUILD_ID to .env to check guild-specific commands');
+            console.log('\n💡 在 .env 中加入 GUILD_ID 以檢查公會專屬指令');
         }
         
     } catch (error) {
-        console.error('❌ Error checking commands:', error);
+        console.error('❌ 檢查指令時發生錯誤:', error);
     }
 })();

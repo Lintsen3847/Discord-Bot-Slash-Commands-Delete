@@ -1,17 +1,17 @@
 const { REST, Routes, SlashCommandBuilder } = require('discord.js');
 require('dotenv').config();
 
-// ⚠️ WARNING: This script will DELETE ALL GLOBAL COMMANDS!
-// It uses rest.put() which OVERWRITES all existing commands,
-// then deletes them. The array below doesn't matter - ALL commands will be removed.
+// ⚠️ 警告：此腳本會刪除所有全域指令！
+// 它使用 rest.put() 會覆蓋所有現有指令，
+// 然後刪除它們。下面的陣列內容無關緊要 - 所有指令都會被移除。
 // 
-// For safer, selective deletion, use delete.js instead!
+// 要進行更安全的選擇性刪除，請使用 delete.js！
 
-// list your old commands to overwrite and then remove
+// 列出要覆蓋然後移除的舊指令
 const oldCommandsToRegister = [
-    { name: 'clear', description: 'Clear the music queue' },
-    { name: 'disconnect', description: 'Disconnect the bot from voice channel' },
-    { name: 'example', description: 'This is an example command' },
+    { name: 'clear', description: '清除音樂佇列' },
+    { name: 'disconnect', description: '中斷機器人的語音頻道連接' },
+    { name: 'example', description: '這是一個範例指令' },
     
 ];
 
@@ -20,16 +20,16 @@ const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
 (async () => {
     try {
         if (!process.env.CLIENT_ID) {
-            console.error('❌ CLIENT_ID not found in .env file!');
+            console.error('❌ 在 .env 文件中找不到 CLIENT_ID！');
             process.exit(1);
         }
 
-        console.log('⚠️  WARNING: This will DELETE ALL GLOBAL COMMANDS!');
-        console.log('⚠️  Use delete.js for safer, selective deletion.\n');
+        console.log('⚠️  警告：這將刪除所有全域指令！');
+        console.log('⚠️  使用 delete.js 進行更安全的選擇性刪除。\n');
 
-        console.log(`🔧 Step 1: Registering ${oldCommandsToRegister.length} old commands...`);
+        console.log(`🔧 步驟 1：正在註冊 ${oldCommandsToRegister.length} 個舊指令...`);
         
-        // Create SlashCommandBuilder objects for old commands
+        // 為舊指令創建 SlashCommandBuilder 物件
         const commandsToRegister = oldCommandsToRegister.map(cmd => 
             new SlashCommandBuilder()
                 .setName(cmd.name)
@@ -37,45 +37,45 @@ const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
                 .toJSON()
         );
 
-        // Register all old commands globally
+        // 全域註冊所有舊指令
         await rest.put(
             Routes.applicationCommands(process.env.CLIENT_ID),
             { body: commandsToRegister }
         );
 
-        console.log(`✅ Successfully registered ${commandsToRegister.length} old commands.`);
-        console.log('⏳ Waiting 2 seconds...\n');
+        console.log(`✅ 成功註冊 ${commandsToRegister.length} 個舊指令。`);
+        console.log('⏳ 等待 2 秒...\n');
         
-        // Wait a moment for registration to complete
+        // 等待一下讓註冊完成
         await new Promise(resolve => setTimeout(resolve, 2000));
 
-        console.log(`🗑️  Step 2: Now removing these listed commands...`);
+        console.log(`🗑️  步驟 2：現在移除這些列出的指令...`);
 
-        // Get all currently registered commands
+        // 獲取所有目前已註冊的指令
         const registeredCommands = await rest.get(Routes.applicationCommands(process.env.CLIENT_ID));
-        console.log(`📋 Found ${registeredCommands.length} registered commands`);
+        console.log(`📋 找到 ${registeredCommands.length} 個已註冊的指令`);
 
-        // Filter and delete the old commands we just registered
+        // 篩選並刪除我們剛註冊的舊指令
         const commandsToDelete = registeredCommands.filter(cmd => 
             oldCommandsToRegister.some(oldCmd => oldCmd.name === cmd.name)
         );
 
-        console.log(`🎯 Targeting ${commandsToDelete.length} commands for deletion:`);
+        console.log(`🎯 目標刪除 ${commandsToDelete.length} 個指令：`);
         commandsToDelete.forEach(cmd => console.log(`   - ${cmd.name}`));
 
-        // Delete each old command
+        // 刪除每個舊指令
         for (const command of commandsToDelete) {
             try {
                 await rest.delete(Routes.applicationCommand(process.env.CLIENT_ID, command.id));
-                console.log(`✅ Deleted: ${command.name}`);
+                console.log(`✅ 已刪除: ${command.name}`);
             } catch (error) {
-                console.error(`❌ Failed to delete ${command.name}:`, error.message);
+                console.error(`❌ 刪除失敗 (${command.name}):`, error.message);
             }
         }
 
-        console.log('\n🎉 Successfully cleaned up listed commands!');
+        console.log('\n🎉 成功清理列出的指令！');
         
     } catch (error) {
-        console.error('❌ Error in cleanup process:', error);
+        console.error('❌ 清理過程中發生錯誤:', error);
     }
 })();
