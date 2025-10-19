@@ -32,11 +32,17 @@ node delete.js
 - Delete all commands (type `all`)
 - Safe with double confirmation
 
-### 3. `nuke.js` - Targeted Cleanup
-Register specific old commands and immediately remove them (useful when you know exact command names).
+### 3. `nuke.js` - Nuclear Option ⚠️
+**WARNING: This will delete ALL global commands!** Uses `rest.put()` which overwrites all existing commands, then removes them.
 ```bash
 node nuke.js
 ```
+
+**What it does:**
+- Replaces all current commands with the ones in `oldCommandsToRegister` array
+- Then deletes those commands
+- **Result: All commands are removed**
+- ⚠️ Use with extreme caution!
 
 ## Requirements
 
@@ -70,7 +76,7 @@ CLIENT_ID=your_bot_client_id_here
 node check.js
 ```
 
-### 2. Interactive deletion (Recommended):
+### 2. Interactive deletion (Recommended ⭐):
 ```bash
 node delete.js
 ```
@@ -82,11 +88,12 @@ Then follow the prompts:
   - `1,3,5` - Delete commands #1, #3, and #5
   - `1-10` - Delete commands #1 through #10
 
-### 3. Pre-configured deletion:
-Edit the `oldCommandsToRemove` array in `nuke.js`, then:
+### 3. Nuclear deletion (Delete everything):
+⚠️ **WARNING: This deletes ALL global commands without confirmation!**
 ```bash
 node nuke.js
 ```
+Only use this when you want to completely wipe all commands.
 
 ## License
 

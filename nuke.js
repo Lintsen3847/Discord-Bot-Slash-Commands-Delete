@@ -1,6 +1,12 @@
 const { REST, Routes, SlashCommandBuilder } = require('discord.js');
 require('dotenv').config();
 
+// ⚠️ WARNING: This script will DELETE ALL GLOBAL COMMANDS!
+// It uses rest.put() which OVERWRITES all existing commands,
+// then deletes them. The array below doesn't matter - ALL commands will be removed.
+// 
+// For safer, selective deletion, use delete.js instead!
+
 // list your old commands to overwrite and then remove
 const oldCommandsToRegister = [
     { name: 'clear', description: 'Clear the music queue' },
@@ -17,6 +23,9 @@ const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
             console.error('❌ CLIENT_ID not found in .env file!');
             process.exit(1);
         }
+
+        console.log('⚠️  WARNING: This will DELETE ALL GLOBAL COMMANDS!');
+        console.log('⚠️  Use delete.js for safer, selective deletion.\n');
 
         console.log(`🔧 Step 1: Registering ${oldCommandsToRegister.length} old commands...`);
         
