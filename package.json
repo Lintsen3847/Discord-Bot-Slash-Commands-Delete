@@ -2,10 +2,11 @@
   "name": "discord-command-cleanup",
   "version": "1.0.0",
   "description": "Simple utility to inspect and clean up Discord slash commands when migrating projects or reusing bot tokens",
-  "main": "check-commands.js",
+  "main": "check.js",
   "scripts": {
-    "check": "node check-commands.js",
-    "cleanup": "node register-and-remove.js"
+    "check": "node check.js",
+    "delete": "node delete.js",
+    "nuke": "node nuke.js"
   },
   "keywords": [
     "discord",

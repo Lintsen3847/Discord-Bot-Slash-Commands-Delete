@@ -18,7 +18,21 @@ See what commands are currently registered with your bot.
 node check.js
 ```
 
-### 2. `nuke.js` - Targeted Cleanup
+### 2. `delete.js` - Interactive Command Deletion 🆕
+Interactively select and delete commands with multiple deletion options.
+```bash
+node delete.js
+```
+
+**Features:**
+- View all global and guild commands
+- Delete single command (e.g., `3`)
+- Delete multiple commands (e.g., `1,3,5`)
+- Delete range of commands (e.g., `1-10`)
+- Delete all commands (type `all`)
+- Safe with double confirmation
+
+### 3. `nuke.js` - Targeted Cleanup
 Register specific old commands and immediately remove them (useful when you know exact command names).
 ```bash
 node nuke.js
@@ -51,12 +65,24 @@ CLIENT_ID=your_bot_client_id_here
 
 ## Usage Examples
 
-### Check what's currently registered:
+### 1. Check what's currently registered:
 ```bash
 node check.js
 ```
 
-### Remove specific old commands:
+### 2. Interactive deletion (Recommended):
+```bash
+node delete.js
+```
+Then follow the prompts:
+- Choose command type (global/guild)
+- Enter deletion option:
+  - `all` - Delete all commands
+  - `5` - Delete command #5
+  - `1,3,5` - Delete commands #1, #3, and #5
+  - `1-10` - Delete commands #1 through #10
+
+### 3. Pre-configured deletion:
 Edit the `oldCommandsToRemove` array in `nuke.js`, then:
 ```bash
 node nuke.js
