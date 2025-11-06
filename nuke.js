@@ -11,7 +11,7 @@ require('dotenv').config();
 const oldCommandsToRegister = [
     { name: 'clear', description: '清除音樂佇列' },
     { name: 'disconnect', description: '中斷機器人的語音頻道連接' },
-    { name: 'example', description: '這是一個範例指令' },
+    { name: 'ping', description: '這是一個範例指令' },
     
 ];
 
@@ -20,14 +20,14 @@ const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
 (async () => {
     try {
         if (!process.env.CLIENT_ID) {
-            console.error('❌ 在 .env 文件中找不到 CLIENT_ID！');
+            console.error('❌ 在 .env 文件中找不到 CLIENT_ID!');
             process.exit(1);
         }
 
-        console.log('⚠️  警告：這將刪除所有全域指令！');
+        console.log('⚠️  警告 : 這將刪除所有全域指令！');
         console.log('⚠️  使用 delete.js 進行更安全的選擇性刪除。\n');
 
-        console.log(`🔧 步驟 1：正在註冊 ${oldCommandsToRegister.length} 個舊指令...`);
+        console.log(`🔧 步驟 1:正在註冊 ${oldCommandsToRegister.length} 個舊指令...`);
         
         // 為舊指令創建 SlashCommandBuilder 物件
         const commandsToRegister = oldCommandsToRegister.map(cmd => 
@@ -49,7 +49,7 @@ const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
         // 等待一下讓註冊完成
         await new Promise(resolve => setTimeout(resolve, 2000));
 
-        console.log(`🗑️  步驟 2：現在移除這些列出的指令...`);
+        console.log(`🗑️  步驟 2:現在移除這些列出的指令...`);
 
         // 獲取所有目前已註冊的指令
         const registeredCommands = await rest.get(Routes.applicationCommands(process.env.CLIENT_ID));
