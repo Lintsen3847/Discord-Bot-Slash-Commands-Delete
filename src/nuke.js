@@ -9,10 +9,14 @@ const { createREST, validateEnv, clearGlobalCommands, clearGuildCommands, saveBa
  */
 async function nukeCommands(options = {}) {
     const rest = createREST();
-    const { clientId, guildId } = validateEnv(false);
+    const { clientId, guildId } = validateEnv(options.guildOnly);
 
     // 先抓取目前指令做備份
     const { global, guild } = await fetchAllCommands(rest, clientId, guildId);
+
+    if (options.guildOnly && !guildId) {
+        throw new Error('❌ 使用 --guild 時必須在 .env 中設定 GUILD_ID');
+    }
 
     if (!options.yes) {
         console.log('⚠️  警告：這將刪除以下指令！\n');

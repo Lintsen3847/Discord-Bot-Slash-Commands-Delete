@@ -21,7 +21,7 @@ function parseDeleteInput(input, total) {
         if (nums.some(n => isNaN(n) || n < 1 || n > total)) {
             throw new Error('無效的數字');
         }
-        return nums.map(n => n - 1);
+        return [...new Set(nums.map(n => n - 1))].sort((a, b) => a - b);
     }
     const num = parseInt(normalized);
     if (isNaN(num) || num < 1 || num > total) {

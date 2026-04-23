@@ -4,7 +4,6 @@ const { createREST, validateEnv, fetchAllCommands, formatCommandList } = require
  * 檢查目前已註冊的指令
  * @param {Object} options
  * @param {boolean} options.json - 是否輸出 JSON 格式
- * @param {boolean} options.save - 是否儲存備份
  */
 async function checkCommands(options = {}) {
     const rest = createREST();

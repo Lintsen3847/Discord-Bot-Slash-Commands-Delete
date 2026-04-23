@@ -5,10 +5,12 @@ const { checkCommands } = require('./src/check');
 const { deleteCommandsInteractive, deleteCommandsDirect } = require('./src/delete');
 const { nukeCommands } = require('./src/nuke');
 
+const pkg = require('./package.json');
+
 program
     .name('discord-command-cleanup')
     .description('Discord 斜線指令清理工具')
-    .version('2.0.0');
+    .version(pkg.version);
 
 program
     .command('check')
