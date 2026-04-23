@@ -2,7 +2,7 @@
 
 const { program } = require('commander');
 const { checkCommands } = require('./src/check');
-const { deleteCommandsInteractive } = require('./src/delete');
+const { deleteCommandsInteractive, deleteCommandsDirect } = require('./src/delete');
 const { nukeCommands } = require('./src/nuke');
 
 program
@@ -27,9 +27,22 @@ program
     .command('delete')
     .description('互動式刪除指令（推薦）')
     .option('--no-backup', '跳過備份')
+    .option('-a, --all', '非互動模式：刪除全部')
+    .option('-s, --scope <type>', '非互動模式：指定範圍 (global|guild)', 'global')
+    .option('--select <pattern>', '非互動模式：指定選擇 (all|1,3|1-5|3)', 'all')
+    .option('-y, --yes', '非互動模式：跳過確認')
     .action(async (options) => {
         try {
-            await deleteCommandsInteractive({ noBackup: !options.backup });
+            if (options.all) {
+                await deleteCommandsDirect({
+                    scope: options.scope,
+                    select: options.select,
+                    yes: options.yes,
+                    noBackup: !options.backup
+                });
+            } else {
+                await deleteCommandsInteractive({ noBackup: !options.backup });
+            }
         } catch (err) {
             console.error(err.message);
             process.exit(1);

@@ -10,6 +10,9 @@
     "check": "node index.js check",
     "delete": "node index.js delete",
     "nuke": "node index.js nuke",
+    "c": "node index.js check",
+    "d": "node index.js delete",
+    "n": "node index.js nuke",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write ."
@@ -36,6 +39,7 @@
   },
   "homepage": "https://github.com/Lintsen3847/Discord-Bot-Slash-Commands-Delete#readme",
   "dependencies": {
+    "@inquirer/prompts": "^8.0.0",
     "commander": "^13.0.0",
     "discord.js": "^14.0.0",
     "dotenv": "^16.0.0"
