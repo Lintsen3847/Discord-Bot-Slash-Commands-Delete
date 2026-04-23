@@ -12,43 +12,76 @@ When you inherit a Discord bot token or migrate from one project to another, old
 - Cause conflicts with new commands
 - Be difficult to remove manually
 
+## Quick Start
+
+```bash
+npm install
+npm run check          # Inspect commands
+npm run delete         # Interactive deletion (arrow keys menu)
+npm run nuke -- --yes  # One-click clear all
+```
+
+**Shorthand commands:**
+```bash
+npm run c    # = check
+npm run d    # = delete
+npm run n    # = nuke
+```
+
 ## Available Tools
 
-### 1. `check.js` - Command Inspector
-See what commands are currently registered with your bot.
+### 1. `check` — Command Inspector
 ```bash
-node check.js
+npm run check
+# or
+node index.js check
 ```
 
-### 2. `delete.js` - Interactive Command Deletion 🆕
-Interactively select and delete commands with multiple deletion options.
+**Options:**
+- `-j, --json` Output in JSON format
+
+### 2. `delete` — Interactive Command Deletion ⭐
+
+**New TUI menu (recommended):**
 ```bash
-node delete.js
+npm run delete
+# or
+node index.js delete
 ```
 
-**Features:**
-- View all global and guild commands
-- Delete single command (e.g., `3`)
-- Delete multiple commands (e.g., `1,3,5`)
-- Delete range of commands (e.g., `1-10`)
-- Delete all commands (type `all`)
-- Safe with double confirmation
+Use **arrow keys + space + Enter**:
+1. Choose "Global commands" or "Guild commands"
+2. Press **space** to select commands to delete (or check "⚠️ Delete all")
+3. Press **Enter** to confirm selection
+4. Finally press **y / Enter** to confirm deletion
 
-### 3. `nuke.js` - Nuclear Option ⚠️
-**WARNING: This will delete ALL global commands!** Uses `rest.put()` which overwrites all existing commands, then removes them.
+**Non-interactive mode (one-click):**
 ```bash
-node nuke.js
+# Delete all global commands
+node index.js delete --all --yes
+
+# Delete all guild commands
+node index.js delete --all --yes --scope guild
+
+# Delete specific range
+node index.js delete --scope global --select 1,3,5 --yes
 ```
 
-**What it does:**
-- Replaces all current commands with the ones in `oldCommandsToRegister` array
-- Then deletes those commands
-- **Result: All commands are removed**
-- ⚠️ Use with extreme caution!
+### 3. `nuke` — Nuclear Option ⚠️
+```bash
+npm run nuke -- --yes
+# or
+node index.js nuke --yes
+```
+
+**Options:**
+- `-y, --yes` Skip confirmation
+- `-g, --guild` Clear guild commands only
+- `--global-only` Clear global commands only
 
 ## Requirements
 
-1. **Node.js** (v16.11.0 or higher)
+- **Node.js** v16.11.0+
 
 ## Setup
 
@@ -67,35 +100,46 @@ CLIENT_ID=your_bot_client_id_here
 ```
 
 3. **Get your credentials:**
-   - **BOT_TOKEN**: Discord Developer Portal → Your App → Bot → Token
-   - **CLIENT_ID**: Discord Developer Portal → Your App → General Information → Application ID
-   - **GUILD_ID**: Right-click your Discord server → Copy Server ID (optional)
+   - **BOT_TOKEN**: Discord Developer Portal → Bot → Token
+   - **CLIENT_ID**: Discord Developer Portal → General Information → Application ID
+   - **GUILD_ID**: Right-click Discord server → Copy Server ID
 
-## Usage Examples
+## Global Installation (Optional)
 
-### 1. Check what's currently registered:
+If you don't want to run inside the project directory every time:
+
 ```bash
-node check.js
+npm install -g .
+# Then use anywhere:
+discord-cleanup check
+discord-cleanup delete --all --yes
+discord-cleanup nuke --yes
 ```
 
-### 2. Interactive deletion (Recommended ⭐):
-```bash
-node delete.js
-```
-Then follow the prompts:
-- Choose command type (global/guild)
-- Enter deletion option:
-  - `all` - Delete all commands
-  - `5` - Delete command #5
-  - `1,3,5` - Delete commands #1, #3, and #5
-  - `1-10` - Delete commands #1 through #10
+## Backup Mechanism
 
-### 3. Nuclear deletion (Delete everything):
-⚠️ **WARNING: This deletes ALL global commands without confirmation!**
-```bash
-node nuke.js
+When running `delete` and `nuke`, the tool automatically saves a backup of the current commands to the `backups/` directory before deletion, allowing manual restoration if needed.
+
+## File Structure
+
 ```
-Only use this when you want to completely wipe all commands.
+lib/discord.js       # Shared Discord REST utilities
+src/check.js         # Inspect commands
+src/delete.js        # Interactive deletion (TUI menu)
+src/nuke.js          # Clear all commands
+index.js             # Unified CLI entry
+check.js             # Legacy wrapper
+delete.js            # Legacy wrapper
+nuke.js              # Legacy wrapper
+```
+
+## Development
+
+```bash
+npm run lint       # Check code style
+npm run lint:fix   # Auto fix
+npm run format     # Format code
+```
 
 ## License
 
@@ -103,4 +147,4 @@ MIT License
 
 ---
 
-*Created by Lin_tsen • 2025/9/28*
+*Created by Lin_tsen • 2026*

@@ -1,12 +1,21 @@
 {
   "name": "discord-command-cleanup",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Simple utility to inspect and clean up Discord slash commands when migrating projects or reusing bot tokens",
-  "main": "check.js",
+  "main": "index.js",
+  "bin": {
+    "discord-cleanup": "./index.js"
+  },
   "scripts": {
-    "check": "node check.js",
-    "delete": "node delete.js",
-    "nuke": "node nuke.js"
+    "check": "node index.js check",
+    "delete": "node index.js delete",
+    "nuke": "node index.js nuke",
+    "c": "node index.js check",
+    "d": "node index.js delete",
+    "n": "node index.js nuke",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write ."
   },
   "keywords": [
     "discord",
@@ -19,19 +28,25 @@
     "delete",
     "remove"
   ],
-  "author": "Your Name",
+  "author": "Lin_tsen",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/discord-command-cleanup.git"
+    "url": "https://github.com/Lintsen3847/Discord-Bot-Slash-Commands-Delete.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/discord-command-cleanup/issues"
+    "url": "https://github.com/Lintsen3847/Discord-Bot-Slash-Commands-Delete/issues"
   },
-  "homepage": "https://github.com/yourusername/discord-command-cleanup#readme",
+  "homepage": "https://github.com/Lintsen3847/Discord-Bot-Slash-Commands-Delete#readme",
   "dependencies": {
+    "@inquirer/prompts": "^8.0.0",
+    "commander": "^13.0.0",
     "discord.js": "^14.0.0",
     "dotenv": "^16.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5"
   },
   "engines": {
     "node": ">=16.11.0"

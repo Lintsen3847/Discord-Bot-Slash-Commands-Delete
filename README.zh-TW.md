@@ -12,43 +12,76 @@
 - 與新指令產生衝突
 - 難以手動移除
 
+## 快速開始
+
+```bash
+npm install
+npm run check          # 檢查指令
+npm run delete         # 互動式刪除（方向鍵選單）
+npm run nuke -- --yes  # 一鍵清空全部
+```
+
+**更短指令：**
+```bash
+npm run c    # = check
+npm run d    # = delete
+npm run n    # = nuke
+```
+
 ## 可用工具
 
-### 1. `check.js` - 指令檢查器
-查看目前在你的機器人上註冊的所有指令。
+### 1. `check` — 指令檢查器
 ```bash
-node check.js
+npm run check
+# 或
+node index.js check
 ```
 
-### 2. `delete.js` - 互動式指令刪除 🆕
-以互動方式選擇並刪除指令，支援多種刪除選項。
+**選項：**
+- `-j, --json` JSON 格式輸出
+
+### 2. `delete` — 互動式刪除 ⭐
+
+**新版 TUI 選單（推薦）：**
 ```bash
-node delete.js
+npm run delete
+# 或
+node index.js delete
 ```
 
-**功能：**
-- 查看所有全域和公會指令
-- 刪除單一指令（例如：`3`）
-- 刪除多個指令（例如：`1,3,5`）
-- 刪除範圍內的指令（例如：`1-10`）
-- 刪除所有指令（輸入 `all`）
-- 雙重確認保護機制
+用 **方向鍵 + 空格 + Enter** 操作：
+1. 選擇「全域指令」或「公會指令」
+2. 用 **空格** 勾選要刪的指令（或勾「⚠️ 全部刪除」）
+3. 按 **Enter** 確認選擇
+4. 最後按 **y / Enter** 確認刪除
 
-### 3. `nuke.js` - 核彈選項 ⚠️
-**警告：這將刪除所有全域指令！** 使用 `rest.put()` 覆蓋所有現有指令，然後移除它們。
+**非互動模式（一鍵刪除）：**
 ```bash
-node nuke.js
+# 刪除全部全域指令
+node index.js delete --all --yes
+
+# 刪除全部公會指令
+node index.js delete --all --yes --scope guild
+
+# 刪除指定範圍
+node index.js delete --scope global --select 1,3,5 --yes
 ```
 
-**此腳本的作用：**
-- 用 `oldCommandsToRegister` 陣列中的指令替換所有當前指令
-- 然後刪除這些指令
-- **結果：所有指令都會被移除**
-- ⚠️ 請極度謹慎使用！
+### 3. `nuke` — 核彈選項 ⚠️
+```bash
+npm run nuke -- --yes
+# 或
+node index.js nuke --yes
+```
+
+**選項：**
+- `-y, --yes` 跳過確認
+- `-g, --guild` 只清空公會指令
+- `--global-only` 只清空全域指令
 
 ## 需求
 
-1. **Node.js** (v16.11.0 或更高版本)
+- **Node.js** v16.11.0+
 
 ## 設定
 
@@ -66,36 +99,47 @@ CLIENT_ID=your_bot_client_id_here
 # GUILD_ID=your_server_id_here
 ```
 
-3. **取得你的憑證：**
-   - **BOT_TOKEN**：Discord 開發者平台 → 你的應用程式 → Bot → Token
-   - **CLIENT_ID**：Discord 開發者平台 → 你的應用程式 → General Information → Application ID
-   - **GUILD_ID**：右鍵點擊你的 Discord 伺服器 → 複製伺服器 ID（選填）
+3. **取得憑證：**
+   - **BOT_TOKEN**：Discord 開發者平台 → Bot → Token
+   - **CLIENT_ID**：Discord 開發者平台 → General Information → Application ID
+   - **GUILD_ID**：右鍵 Discord 伺服器 → 複製伺服器 ID
 
-## 使用範例
+## 全域安裝（可選）
 
-### 1. 檢查目前已註冊的指令：
+如果你不想每次都在專案目錄執行：
+
 ```bash
-node check.js
+npm install -g .
+# 之後在任何地方都能用：
+discord-cleanup check
+discord-cleanup delete --all --yes
+discord-cleanup nuke --yes
 ```
 
-### 2. 互動式刪除（推薦 ⭐）：
-```bash
-node delete.js
-```
-然後按照提示操作：
-- 選擇指令類型（全域/公會）
-- 輸入刪除選項：
-  - `all` - 刪除所有指令
-  - `5` - 刪除第 5 個指令
-  - `1,3,5` - 刪除第 1、3、5 個指令
-  - `1-10` - 刪除第 1 到第 10 個指令
+## 備份機制
 
-### 3. 核彈刪除（刪除所有）：
-⚠️ **警告：這會在沒有確認的情況下刪除所有全域指令！**
-```bash
-node nuke.js
+執行 `delete` 和 `nuke` 時，工具會自動在 `backups/` 目錄儲存刪除前的指令列表，方便需要時手動還原。
+
+## 檔案結構
+
 ```
-只有在你想要完全清除所有指令時才使用此選項。
+lib/discord.js       # 共用 Discord REST 工具
+src/check.js         # 檢查指令
+src/delete.js        # 互動式刪除（TUI 選單）
+src/nuke.js          # 清空指令
+index.js             # 統一 CLI 入口
+check.js             # 舊用法 wrapper
+delete.js            # 舊用法 wrapper
+nuke.js              # 舊用法 wrapper
+```
+
+## 開發
+
+```bash
+npm run lint       # 檢查程式碼風格
+npm run lint:fix   # 自動修復
+npm run format     # 格式化
+```
 
 ## 授權
 
@@ -103,4 +147,4 @@ MIT License
 
 ---
 
-*Created by Lin_tsen • 2025/9/28*
+*Created by Lin_tsen • 2026*
