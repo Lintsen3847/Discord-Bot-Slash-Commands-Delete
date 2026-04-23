@@ -14,15 +14,22 @@
 
 ## 可用工具
 
-### 1. `check.js` - 指令檢查器
+### 1. `check` - 指令檢查器
 查看目前在你的機器人上註冊的所有指令。
 ```bash
+node index.js check
+# 或舊用法
 node check.js
 ```
 
-### 2. `delete.js` - 互動式指令刪除 🆕
+**新功能：**
+- `-j, --json` 以 JSON 格式輸出（方便腳本整合）
+
+### 2. `delete` - 互動式指令刪除 ⭐
 以互動方式選擇並刪除指令，支援多種刪除選項。
 ```bash
+node index.js delete
+# 或舊用法
 node delete.js
 ```
 
@@ -33,18 +40,21 @@ node delete.js
 - 刪除範圍內的指令（例如：`1-10`）
 - 刪除所有指令（輸入 `all`）
 - 雙重確認保護機制
+- **自動備份**刪除前的指令列表
 
-### 3. `nuke.js` - 核彈選項 ⚠️
-**警告：這將刪除所有全域指令！** 使用 `rest.put()` 覆蓋所有現有指令，然後移除它們。
+### 3. `nuke` - 核彈選項 ⚠️
+**警告：這將刪除所有指令！** 直接清空所有已註冊的指令。
 ```bash
+node index.js nuke
+# 或舊用法
 node nuke.js
 ```
 
-**此腳本的作用：**
-- 用 `oldCommandsToRegister` 陣列中的指令替換所有當前指令
-- 然後刪除這些指令
-- **結果：所有指令都會被移除**
-- ⚠️ 請極度謹慎使用！
+**新功能：**
+- `-y, --yes` 跳過確認提示（自動化腳本用）
+- `-g, --guild` 只清空公會指令
+- `--global-only` 只清空全域指令
+- **自動備份**刪除前的指令列表
 
 ## 需求
 
@@ -75,12 +85,17 @@ CLIENT_ID=your_bot_client_id_here
 
 ### 1. 檢查目前已註冊的指令：
 ```bash
-node check.js
+node index.js check
+```
+
+JSON 輸出（方便腳本解析）：
+```bash
+node index.js check --json
 ```
 
 ### 2. 互動式刪除（推薦 ⭐）：
 ```bash
-node delete.js
+node index.js delete
 ```
 然後按照提示操作：
 - 選擇指令類型（全域/公會）
@@ -90,12 +105,61 @@ node delete.js
   - `1,3,5` - 刪除第 1、3、5 個指令
   - `1-10` - 刪除第 1 到第 10 個指令
 
-### 3. 核彈刪除（刪除所有）：
-⚠️ **警告：這會在沒有確認的情況下刪除所有全域指令！**
+### 3. 核彈刪除（清空所有）：
 ```bash
-node nuke.js
+# 有確認提示
+node index.js nuke
+
+# 跳過確認（自動化腳本用）
+node index.js nuke --yes
+
+# 只清空公會指令
+node index.js nuke --yes --guild
+
+# 只清空全域指令
+node index.js nuke --yes --global-only
 ```
-只有在你想要完全清除所有指令時才使用此選項。
+
+## 備份機制
+
+執行 `delete` 和 `nuke` 時，工具會在 `backups/` 目錄自動儲存刪除前的指令列表，方便需要時手動還原。
+
+備份檔案命名格式：
+```
+backups/backup-global-2025-01-15T10-30-00-000Z.json
+backups/backup-guild-123456789-2025-01-15T10-30-00-000Z.json
+```
+
+## 專案結構
+
+```
+.
+├── lib/
+│   └── discord.js       # 共用 Discord REST 工具
+├── src/
+│   ├── check.js         # 檢查指令
+│   ├── delete.js        # 互動式刪除
+│   └── nuke.js          # 清空指令
+├── index.js             # 統一 CLI 入口
+├── check.js             # 舊用法相容 wrapper
+├── delete.js            # 舊用法相容 wrapper
+├── nuke.js              # 舊用法相容 wrapper
+├── .env.example         # 環境變數範例
+└── README.md            # 本文件
+```
+
+## 開發
+
+```bash
+# 檢查程式碼風格
+npm run lint
+
+# 自動修復風格問題
+npm run lint:fix
+
+# 格式化程式碼
+npm run format
+```
 
 ## 授權
 
@@ -103,4 +167,4 @@ MIT License
 
 ---
 
-*Created by Lin_tsen • 2025/9/28*
+*Created by Lin_tsen • 2025*
